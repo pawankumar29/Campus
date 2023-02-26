@@ -1,0 +1,28 @@
+/* 
+.container{
+    display:flex;
+    flex-direction: column;
+    border:1px solid red;
+    height:60%;
+    position: absolute;
+    top:20%;
+    left:40%;
+   padding:60px;
+} */
+
+.inputField{
+    display: flex;
+    flex-direction: column;
+}
+
+.logo{
+  font-size: 60px;
+}
+
+.parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border:1px solid red;
+    height: 100vh;
+  }
