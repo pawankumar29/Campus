@@ -5,6 +5,7 @@ import logo from "../img/download.jpg"
 function LoginPage() {
   const [Email,setEmail]=useState("");
   const [Password,setPassword]=useState("");
+  console.log("pawan");
 
 function setEmailFun(event){
        
