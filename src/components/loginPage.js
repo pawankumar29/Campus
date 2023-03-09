@@ -6,7 +6,7 @@ function LoginPage() {
   const [Email,setEmail]=useState("");
   const [Password,setPassword]=useState("");
 
-function setEmailFun(event,h){
+function setEmailFun(event){
        
      setEmail(event.target.value);
 }
@@ -27,7 +27,7 @@ const submit=(e)=>{
 }
 
   return (
-    <div className={style.parent}>
+    <div className={style.loginPageparent}>
     <div className={style.container}>
       <div className={style.logo}><img className={style.img} src={logo}></img></div>
       <br></br>
@@ -38,7 +38,11 @@ const submit=(e)=>{
 
      <label>Email</label>
      <br></br>
-     <input className={style.loginInput}  type="text" value={Email} onChange={setEmailFun(1)}></input>
+     <input className={style.loginInput}  type="text" value={Email} onChange={setEmailFun}></input>
+     {/* if u want to use the event call it without () and the genuine reason is 
+      that the function will be executed once when the component is rendered, but it will not be called again when the input value changes.
+To fix this issue, you should pass the setEmailFun function as a reference to the onChange event handler, without calling it: 
+just take care only reference will be called */}
      <br></br>
      <label>Password</label>
      <br></br>
