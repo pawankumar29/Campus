@@ -6,33 +6,64 @@ import { authenicationMessage } from "../../core/constant/authenticationMessages
 class authenication{
 
 
-login=async(req,res)=>{
-     try {
-           if(req.user){
-               console.log("rrr--->",req.user);
-          const {_id,email}=req.user;
-          const obj={
-               user_id:_id,
-               email:email
-          }
+// login=async(req,res)=>{
+//      try {
+//            if(req.user){
+//                console.log("rrr--->",req.user);
+//           const {_id,email}=req.user;
+//           const obj={
+//                user_id:_id,
+//                email:email
+//           }
        
-          const token= jwt.sign(obj,process.env.jwtSecretKey);
-          response.response(res,httpStatus.OK,authenicationMessage.DATA_FOUND,token)
+//           const token= jwt.sign(obj,process.env.jwtSecretKey);
+//           response.response(res,httpStatus.OK,authenicationMessage.DATA_FOUND,token)
           
          
-     }
-     else{ const errorMessage = req.flash('error')[0] || 'Data Invalid';
-     console.log(errorMessage);
-     throw new Error(errorMessage);}
+//      }
+//      else{ const errorMessage = req.flash('error')[0] || 'Data Invalid';
+//      console.log(errorMessage);
+//      throw new Error(errorMessage);}
      
         
+//      } catch (error) {
+//           response.response(res,httpStatus.BAD_REQUEST,error.message)
+
+//      }
+
+// }
+
+
+login = async (req, res) => {
+     try {
+
+       if (req.user) {
+
+         const {_id, email} = req.user;
+         const obj = {
+           user_id: _id,
+           email: email
+         }
+   
+         const token = jwt.sign(obj, process.env.jwtSecretKey);
+         response.response(res, httpStatus.OK, authenicationMessage.DATA_FOUND, token)
+   
+       } else {
+         const errorMessage = req.flash('error')[0] || 'Data Invalid';
+         console.log(errorMessage);
+   
+         // Handle authentication failure due to incorrect password
+         if (errorMessage === 'Incorrect password') {
+           throw new Error('Incorrect password');
+         }
+   
+         throw new Error(errorMessage);
+       }
      } catch (error) {
-          response.response(res,httpStatus.BAD_REQUEST,error.message)
-
+       response.response(res, httpStatus.BAD_REQUEST, error.message)
      }
-
-}
-
+   }
+   
 
 
 

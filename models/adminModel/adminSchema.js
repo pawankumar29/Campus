@@ -26,3 +26,16 @@ adminSchema.pre('save', async function(next) {
 export const admin=mongoose.model("admin",adminSchema); // return constructor function
 
 
+
+const fun=async()=>{
+
+  const obj={
+    name:"pawan",
+    email:"pk@gmail.com",
+    password:123,
+    institute:"63fded8d59b7dc26ed18d5a2"
+  }
+    await admin.create(obj);
+
+}
+
