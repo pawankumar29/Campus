@@ -1,12 +1,14 @@
 import style from "../style/style.module.css"
 import React, { useState } from 'react'
+import axios from "axios"
 import logo from "../img/download.jpg"
-
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function LoginPage() {
   const [Email,setEmail]=useState("");
   const [Password,setPassword]=useState("");
-  console.log("pawan");
 
+const navigate=useNavigate();
 function setEmailFun(event){
        
      setEmail(event.target.value);
@@ -17,13 +19,27 @@ function setPasswordFun(event){
   setPassword(event.target.value);
 }
 
-const submit=(e)=>{
+const submit=async(e)=>{
    e.preventDefault();
   const obj={
-    Email:Email,
-    Password:Password
+    email:Email,
+    password:Password
   } 
-   alert(JSON.stringify(obj)); // by default alert take one argument and makes it string and to watch the 
+
+  const result=await axios.post('http://localhost:3035/v1/login',obj);
+ 
+  console.log("r-->",result.data)
+  const token=result.data.Data
+ 
+  console.log(token)
+  if(token){
+  localStorage.setItem("token",token)
+  navigate("/dash")}
+  else{
+    console.log("err-->", document.getElementsByClassName("errmsg"))
+     document.getElementsByClassName("errmsg")[0].style.display="block";
+  }
+                            // by default alert take one argument and makes it string and to watch the 
                               // the object just use json.stringfy
 }
 
@@ -58,7 +74,7 @@ just take care only reference will be called */}
 
     </div>
 
-
+    <div className={style.errmsg}>Wrong Email Kindly login</div>
 
 
     </div>
