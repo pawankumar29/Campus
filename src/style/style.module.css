@@ -71,8 +71,12 @@
   width:150px;
   box-sizing: border-box;}
 
-.errmsg{
+#errmsg{
   display:none;
+}
+
+#errmsg.show{
+  display:block;
 }
  
 

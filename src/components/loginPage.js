@@ -27,17 +27,16 @@ const submit=async(e)=>{
   } 
 
   const result=await axios.post('http://localhost:3035/v1/login',obj);
- 
-  console.log("r-->",result.data)
-  const token=result.data.Data
- 
-  console.log(token)
+  if(result.data){
+  var token=result.data.Data }
   if(token){
   localStorage.setItem("token",token)
   navigate("/dash")}
   else{
-    console.log("err-->", document.getElementsByClassName("errmsg"))
-     document.getElementsByClassName("errmsg")[0].style.display="block";
+    // console.log("err-->",result)
+  const errMsg = document.getElementById("errmsg");
+  console.log("e--",errMsg)
+  errMsg.classList.add(style.show);
   }
                             // by default alert take one argument and makes it string and to watch the 
                               // the object just use json.stringfy
@@ -57,8 +56,10 @@ const submit=async(e)=>{
      <br></br>
      <input className={style.loginInput}  type="text" value={Email} onChange={setEmailFun}></input>
      {/* if u want to use the event call it without () and the genuine reason is 
-      that the function will be executed once when the component is rendered, but it will not be called again when the input value changes.
-To fix this issue, you should pass the setEmailFun function as a reference to the onChange event handler, without calling it: 
+      that the function will be executed once when the component is rendered,
+       but it will not be called again when the input value changes.
+To fix this issue, you should pass the setEmailFun function as a reference 
+to the onChange event handler, without calling it: 
 just take care only reference will be called */}
      <br></br>
      <label>Password</label>
@@ -71,12 +72,13 @@ just take care only reference will be called */}
      <br></br>
      <br></br>
      <div className={style.button}><span className={style.submit} onClick={submit}>Login</span></div>
+     <br></br>
+     <div id={style.errmsg}>Wrong Email Kindly login</div>
+
 
     </div>
 
-    <div className={style.errmsg}>Wrong Email Kindly login</div>
-
-
+   
     </div>
   )
 }
