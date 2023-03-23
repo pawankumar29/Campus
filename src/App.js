@@ -1,4 +1,4 @@
-import LoginPage from "./components/loginPage.js";
+
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import PrivateRoute from "./components/privateRoute.js";
 import Dashboard from "./components/dashboardPage.js";
@@ -7,7 +7,7 @@ function App() {
  
   return (
     <Router>
-      <div>
+      {/* <div>
         <nav>
           <ul>
             <li>
@@ -16,7 +16,7 @@ function App() {
             </li>
             <li><Link to="/">Login</Link></li>
           </ul>
-        </nav>
+        </nav> */}
               
         <Routes>
          <Route path="/dash" element={<PrivateRoute  Component={Dashboard}/>} />
@@ -26,8 +26,7 @@ function App() {
            
         </Routes>
 
-      </div>
-      <button >Click</button>
+      {/* <button >Click</button> */}
 
     </Router>
 

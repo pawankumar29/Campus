@@ -1,0 +1,40 @@
+
+
+.parent{
+    display:flex;
+    height:100vh;
+    align-items: center;
+    justify-content: center;
+    overflow-y: hidden;
+}
+
+.container{
+    border:1px solid red;
+    padding:5%;
+    border-radius: 40px;
+}
+
+.forgot {
+    float:right
+}
+.loginImage img{
+  
+    width:70px;
+}
+
+.loginImage{
+    text-align: center;
+}
+
+.loginButton{
+    text-align: center;
+    
+}
+
+
+.loginButton button{
+    background-color: blue;
+    color: aliceblue;
+    border-radius: 10px;
+    padding :7%;
+}
