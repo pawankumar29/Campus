@@ -23,21 +23,21 @@ function LoginAgain() {
     e.preventDefault();
     setError(validation(values));
 
-    if (
-      Object.keys(error).length == 0 &&
-      values.email != "" &&
-      values.password != ""
-    ) {
-      alert(JSON.stringify(values));
-    }
+    // if (
+    //   Object.keys(error).length == 0 &&
+    //   values.email != "" &&
+    //   values.password != ""
+    // ) {
+    //   alert(JSON.stringify(values));
+    // }
   };
 
-  // useEffect(()=>{
+  useEffect(()=>{
 
-  //     if(Object.keys(error).length==0&&(values.email!=""&&values.password!="")){
-  //          alert(JSON.stringify(values))
-  //     }
-  // },[error]) // it will be called when error will be updated
+      if(Object.keys(error).length==0&&(values.email!=""&&values.password!="")){
+           alert(JSON.stringify(values))
+      }
+  },[error]) // it will be called when error will be updated
 
   return (
     <div className={style.parent}>
