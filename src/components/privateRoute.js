@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import LoginAgain from "./loginAgain";
+import Login from "./Authentication/loginPage";
 
 const PrivateRoute=(props)=>{
 
@@ -10,7 +10,7 @@ const PrivateRoute=(props)=>{
   const {Component}=props
  
   return(
-    token?<Component/>:<LoginAgain/>
+    token?<Component/>:<Login/>
 
   )
 

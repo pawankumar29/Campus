@@ -1,5 +1,5 @@
 
-const validation=(values)=>{
+ export const validation=(values)=>{
    
     const error={};
 
@@ -20,4 +20,13 @@ const validation=(values)=>{
 
 }
 
-export default validation;
+export const loginResponseValidation=(values)=>{
+ const error={};
+     if(!values.token){
+       error.loginError="Invalid Email id/Password"
+     }
+
+     return error;
+
+}
+

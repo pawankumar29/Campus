@@ -2,7 +2,8 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import PrivateRoute from "./components/privateRoute.js";
 import Dashboard from "./components/dashboardPage.js";
-import LoginAgain from "./components/loginAgain.js";
+import Login from "./components/Authentication/loginPage.js";
+import ForgotPassword from './components/Authentication/forgotPasswordPage.js';
 function App() {
  
   return (
@@ -20,7 +21,7 @@ function App() {
               
         <Routes>
          <Route path="/dash" element={<PrivateRoute  Component={Dashboard}/>} />
-          <Route path="/" element={<LoginAgain/>}  />    
+          <Route path="/" element={<ForgotPassword/>}  />    
 
           {/* // necessary to give <LoginPage/> */}
            

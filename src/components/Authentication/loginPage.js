@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import validation from "./loginValidation";
-import style from "../style/newstyle.module.css";
-import image from "../img/download.jpg"
+import {validation,loginResponseValidation} from  "./loginValidation";
+import style from "../../style/loginPage.module.css";
+import image from "../../img/loginLogo.jpg"
 
 function LoginAgain() {
   // for setting password and email
@@ -13,6 +13,7 @@ function LoginAgain() {
 
   // for getting the error message
   const [error, setError] = useState({});
+  const [loginError,setLoginError]=useState({})
 
   // previous values with the new one
   const handleChange = (e) => {
@@ -21,15 +22,7 @@ function LoginAgain() {
 
   const submit = (e) => {
     e.preventDefault();
-    setError(validation(values));
-
-    // if (
-    //   Object.keys(error).length == 0 &&
-    //   values.email != "" &&
-    //   values.password != ""
-    // ) {
-    //   alert(JSON.stringify(values));
-    // }
+      setLoginError(loginResponseValidation({}))
   };
 
   useEffect(()=>{
@@ -77,8 +70,15 @@ function LoginAgain() {
         <div className={style.forgot}><a href="#">Forgot Password</a></div>
         <br/>
         <br/>
+        <div className={style.error}>
+        {loginError&& ((
+          <p style={{ color: "red", fontSize: "13px" }}>{loginError.loginError}</p>
+        ))}
+        </div>
        <div className={style.loginButton}><button onClick={submit}>Submit</button></div> 
       </div>
+      <br/>
+      
     </div>
   );
 }
