@@ -3,8 +3,10 @@ import { useState } from "react";
 import {validation,loginResponseValidation} from  "./loginValidation";
 import style from "../../style/loginPage.module.css";
 import image from "../../img/loginLogo.jpg"
+import { useNavigate } from "react-router-dom";
 
 function LoginAgain() {
+  const navigate = useNavigate();
   // for setting password and email
   const [values, setValues] = useState({
     email: "",
@@ -23,6 +25,9 @@ function LoginAgain() {
   const submit = (e) => {
     e.preventDefault();
       setLoginError(loginResponseValidation({}))
+      if(Object.keys(error).length==0&&(values.email!=""&&values.password!="")){
+        alert(JSON.stringify(values))
+   }
   };
 
   useEffect(()=>{
@@ -67,7 +72,7 @@ function LoginAgain() {
           <p style={{ color: "red", fontSize: "13px" }}>{error.password}</p>
         )}
 
-        <div className={style.forgot}><a href="#">Forgot Password</a></div>
+        <div className={style.forgot}><a href="#" onClick={()=>navigate("/forgot")} >Forgot Password</a></div>
         <br/>
         <br/>
         <div className={style.error}>

@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Login from "./Authentication/loginPage";
 
 const PrivateRoute=(props)=>{
-
-  
-
   const token=localStorage.getItem("token")
   const {Component}=props
  

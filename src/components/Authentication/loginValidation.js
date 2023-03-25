@@ -22,9 +22,9 @@
 
 export const loginResponseValidation=(values)=>{
  const error={};
-     if(!values.token){
-       error.loginError="Invalid Email id/Password"
-     }
+    //  if(!values.token){
+    //    error.loginError="Invalid Email id/Password"
+    //  }
 
      return error;
 
