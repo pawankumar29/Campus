@@ -1,12 +1,23 @@
 
 
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import forgotStyle from "../../style/forgotPassword.module.css";
 import forgot from "../../img/forgot.jpg";
 
 function ForgotPassword() {
+  const [email,setEmail]=useState("");
   const navigate = useNavigate();
+
+  const handleChange=(e)=>{
+      setEmail(e.target.value);
+  }
+
+  const submit=(e)=>{
+     e.preventDefault();
+
+     alert(JSON.stringify(email));
+  }
 
   return (
     <div className={forgotStyle.parent}>
@@ -23,10 +34,10 @@ function ForgotPassword() {
           <div className={forgotStyle.input}>
             <label>Please Enter Your Name</label>
             <br />
-            <input type="text" />
+            <input type="text" value={email} onChange={handleChange}/>
           </div>
           <div>
-            <button className={forgotStyle.button}>Submit</button>
+            <button className={forgotStyle.button} onClick={submit}>Submit</button>
           </div>
           <br />
           <div>

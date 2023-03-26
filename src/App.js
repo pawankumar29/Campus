@@ -38,3 +38,24 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
+//-------------------
+
+// int sum(int a[],int n,int i){
+//   int sum1=0;
+//   cout<<"n"<<endl;
+//   if(i<n){
+//   cout<<"i-->"<<i<<endl;
+//    sum1=sum1+sum(a,n,++i);
+//    return 0;
+//   }
+
+//  return sum1;
+
+// }
