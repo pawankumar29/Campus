@@ -1,13 +1,15 @@
 import React from "react";
 import forgotStyle from "../../style/resetPassword.module.css"
 import forgot from "../../img/forgot.jpg"
+import { resetPasswordValidation } from "./loginValidation";
 class resetPassword extends React.Component{
     
     constructor(){
         super();
         this.state={
             password:"",
-            confirmPassword:""
+            confirmPassword:"",
+            validate:{}
         }
     }
 
@@ -23,6 +25,9 @@ class resetPassword extends React.Component{
       
 
     submit=(e)=>{
+        this.setState({validate:resetPasswordValidation(this.state)}) // only filling the required value of validate
+    
+        if(!this.state.validate)
         alert(JSON.stringify(this.state));
     }
 
@@ -54,6 +59,7 @@ class resetPassword extends React.Component{
             
             
             </div>
+            {this.state.validate.resetError&&(<p style={{color:"red",fontSize:"22px"}}>{this.state.validate.resetError}</p>)}
             <div>
                 <button className={forgotStyle.button} onClick={this.submit} >Submit</button>
             </div>
