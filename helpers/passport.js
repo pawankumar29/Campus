@@ -24,7 +24,7 @@ export function initialize(passport) {
 
 
   const authenticateUser=async (email, password, done) => {
-    console.log("Authenticating user...");
+
     const user = await admin.findOne({email:email});
     if (user == null) {
       return done(null, false, { message: 'No user with that email' })
@@ -35,7 +35,7 @@ export function initialize(passport) {
       if (isPasswordMatch) {
         return done(null, user);
       } else {
-        console.log("incorrect Password");
+       
         return done(null, false, { message: 'Incorrect password' });
       }
     } catch (e) {
