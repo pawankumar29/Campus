@@ -8,6 +8,8 @@ const adminSchema=new schema({
     institute:{type:schema.Types.ObjectId,ref:"institutes"},
     email:{type:String,required:true},
     password:{type:String,required:true},
+    resetPasswordToken:{type:String,default:undefined},
+    resetPasswordTokenExpire:{type:Date,default:undefined}
 
 },
  {timestamps:true}
@@ -38,4 +40,6 @@ const fun=async()=>{
     await admin.create(obj);
 
 }
+
+
 
