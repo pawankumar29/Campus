@@ -34,9 +34,10 @@ login = async (req, res) => {
 
  forgot_password=async(req,res)=>{
    try {
-    const email=req.body.email;
-    const checkUserExist=await admin.findOne({email:email});
-
+    const Email=req.body.email;
+    console.log(Email);
+    const checkUserExist=await admin.findOne({email:Email});
+console.log("c-->",checkUserExist);
     if(!checkUserExist){
       response.response(res,httpStatus.BAD_REQUEST,status.fail,authenicationMessage.DATA_NOT_FOUND)
     }
@@ -50,17 +51,17 @@ login = async (req, res) => {
 
      // send email 
        
-     const result=await sendMail(email,token,checkUserExist.name);
+     const result=await sendMail(Email,token,checkUserExist.name);
 
      if(result.status){
-        response.response(res,statusbar.OK,status.success,authenicationMessage.DATA_SENT_SUCCESSFULLY)
+        response.response(res,httpStatus.OK,status.success,authenicationMessage.DATA_SENT_SUCCESSFULLY)
      }
      else{
        throw new Error(result.message)
      }
 
    } catch (error) {
-    response.response(res,statusbar.BAD_REQUEST,status.fail,error.message);
+    response.response(res,httpStatus.BAD_REQUEST,status.fail,error.message);
    }
 
 }

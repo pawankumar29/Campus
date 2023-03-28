@@ -13,12 +13,12 @@ export const sendMail=async(emailToSend,token,name)=>{
 
           const message = {
             from: process.env.EMAIL_FROM, // replace with your own Gmail address
-            to: email,
+            to: emailToSend,
             subject: 'Reset your password',
             html: `
               <p>Hi ${name},</p>
-              <p>You have requested to reset your password.</p>
-              <p>Click <a href="http://localhost:3000?token=${token}">here</a> to reset your password.</p>
+              <p>You have requested pawan to reset your password.</p>
+              <p>Click <a href="http://localhost:3000?token=${token}" style="color:blue ,text-decoration:underline">here</a> to reset your password.</p>
               <p>If you did not request this, please ignore this email.</p>
             `,
           };
