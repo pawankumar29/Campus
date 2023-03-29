@@ -10,7 +10,7 @@ export const sendMail=async(emailToSend,token,name)=>{
               pass: process.env.EMAIL_PASSWORD, // replace with your own Gmail password
             },
           });
-
+       const frontend_url=process.env.frontend_url
           const message = {
             from: process.env.EMAIL_FROM, // replace with your own Gmail address
             to: emailToSend,
@@ -18,7 +18,7 @@ export const sendMail=async(emailToSend,token,name)=>{
             html: `
               <p>Hi ${name},</p>
               <p>You have requested pawan to reset your password.</p>
-              <p>Click <a href="http://localhost:3000?token=${token}" style="color:blue; text-decoration:underline">here</a> to reset your password.</p>
+              <p>Click <a href="${frontend_url}?token=${token}" style="color:blue; text-decoration:underline">here</a> to reset your password.</p>
               <p>If you did not request this, please ignore this email.</p>
             `,
           };

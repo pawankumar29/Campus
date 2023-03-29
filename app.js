@@ -7,12 +7,14 @@ import passport from "passport";
 import session from "express-session";
 import authenticationrouter from "./modules/Authentication/router.js";
 import { initialize } from "./helpers/passport.js";
+import cors from "cors";
 dotenv.config();
 dbConnect();
 
 const app = express();
 
 app.use(express.json()); // to get the json data
+app.use(cors());
 app.use(session({
   secret: 'my-secret-key',
   resave: false,
@@ -28,7 +30,7 @@ initialize(passport);
 //routers
 app.use("/v1",authenticationrouter);
 
-app.listen(3035, () => {
-  console.log("app is listening");
+app.listen(process.env.PORT, () => {
+  console.log(`app is listening at ${process.env.PORT}`);
 });
 

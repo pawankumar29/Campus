@@ -21,7 +21,7 @@ login = async (req, res) => {
          }
    
          const token = jwt.sign(obj, process.env.jwtSecretKey);
-         response.response(res, httpStatus.OK, authenicationMessage.DATA_FOUND, token)
+         response.response(res, httpStatus.OK, status.success, authenicationMessage.DATA_FOUND, token)
    
        } else {
          throw new Error(errorMessage);
@@ -35,13 +35,14 @@ login = async (req, res) => {
  forgot_password=async(req,res)=>{
    try {
     const Email=req.body.email;
-    console.log(Email);
+
     const checkUserExist=await admin.findOne({email:Email});
-console.log("c-->",checkUserExist);
+
     if(!checkUserExist){
       response.response(res,httpStatus.BAD_REQUEST,status.fail,authenicationMessage.DATA_NOT_FOUND)
     }
     
+    else{
     const token=crypto.randomBytes(20).toString("hex"); // genertaing unique token
 
      checkUserExist.resetPasswordToken=token; 
@@ -60,7 +61,9 @@ console.log("c-->",checkUserExist);
        throw new Error(result.message)
      }
 
-   } catch (error) {
+   } 
+  }
+   catch (error) {
     response.response(res,httpStatus.BAD_REQUEST,status.fail,error.message);
    }
 

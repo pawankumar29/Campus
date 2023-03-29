@@ -4,25 +4,6 @@ import LocalStrategy from 'passport-local';
 import  bcrypt  from 'bcrypt'
 
 export function initialize(passport) {
-  // const authenticateUser = async (email, password, done) => {
-  //   const user = await admin.findOne({email:email});
-  //   if (user == null) {
-  //     return done(null,  { message: 'No user with that email' })
-  //   }
-
-  //   try {
-  //      const password1=await bcrypt.compare(password,user.password);
-  //     if (password1) {
-  //       return done(null, user._id);
-  //     } else {
-  //       return done(null, false, { message: 'Password incorrect' })
-  //     }
-  //   } catch (e) {
-  //     return done(e)
-  //   }
-  // }
-
-
   const authenticateUser=async (email, password, done) => {
 
     const user = await admin.findOne({email:email});
