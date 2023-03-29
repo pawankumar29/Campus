@@ -1,23 +1,28 @@
 
- export const validation=(values)=>{
+ export const emailValidation=(values,emailCounter)=>{
    
     const error={};
-
+    if(emailCounter){
     if(!values.email){
-        error.message="name is required"
-    }
-     if(!values.password){
-        error.password="password is required"
+        error.message="email is required"
     }
     else if(values.email.length<5){
         error.message="email must be more than 5 characters"
     }
-   
+}
 
     return error; // we are returning an object
+}
 
+export const passwordValidation=(values,passwordCounter)=>{
+    let error={};
+    if(passwordCounter>0){
+        if(!values.password){
+            error.password="password is required"
+        }
+    }
 
-
+    return error;
 }
 
 export const loginResponseValidation=(values)=>{
@@ -32,7 +37,7 @@ export const loginResponseValidation=(values)=>{
 
 export const resetPasswordValidation=(values)=>{
        const error={};
-       console.log("v-->",values);
+
     if(values.password==""||values.confirmPassword==""){
          error.resetError="all fields are required to fill"
     }

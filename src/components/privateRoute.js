@@ -4,10 +4,11 @@ import Login from "./Authentication/loginPage";
 
 const PrivateRoute=(props)=>{
   const token=localStorage.getItem("token")
+
   const {Component}=props
  
   return(
-    token?<Component/>:<Login/>
+    token!== "null" ?<Component/>:<Login/>
 
   )
 
@@ -16,4 +17,7 @@ const PrivateRoute=(props)=>{
 
 
 export default PrivateRoute;
+
+
+
 

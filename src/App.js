@@ -21,7 +21,7 @@ function App() {
         </nav> */}
               
         <Routes>
-         <Route path="/dash" element={<PrivateRoute  Component={Dashboard}/>} />
+         <Route path="/dashboard" element={<PrivateRoute  Component={Dashboard}/>} />
           <Route path="/forgot" element={<ForgotPassword/>}  />   
           <Route path="/login" element={<Login/>}  />  
           <Route path="/" element={<ResetPassword/>}  /> 
