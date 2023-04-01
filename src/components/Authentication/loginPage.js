@@ -5,6 +5,8 @@ import style from "../../style/loginPage.module.css";
 import image from "../../img/loginLogo.jpg"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function LoginAgain() {
   const navigate = useNavigate();
@@ -33,14 +35,22 @@ function LoginAgain() {
     }
     setLoginError(loginResponseValidation(values))
       if(Object.keys(error).length==0&&(values.email!=""&&values.password!="")){
+
+        try{
          const result=await axios.post("http://localhost:3035/v1/login",values);
          if(result.status){
           localStorage.setItem("token",result.data.data);
+          toast.success("login Successful");
+          setTimeout(()=>{
             navigate("/dashboard");
+          },2000)
+            
          }
-         else{
-           localStorage.setItem("token",null);
-         }
+        }catch(error){
+          toast.error(error.response.data);
+          localStorage.setItem("token",null);
+        }
+       
    }
   };
 
@@ -114,7 +124,7 @@ function LoginAgain() {
        <div className={style.loginButton}><button onClick={submit}>Submit</button></div> 
       </div>
       <br/>
-      
+            <ToastContainer/>
     </div>
   );
 }
