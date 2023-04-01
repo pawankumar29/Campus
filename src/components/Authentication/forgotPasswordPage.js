@@ -37,7 +37,7 @@ function ForgotPassword() {
       toast.success("success")
       
       setTimeout(()=>{
-        navigate("/login");
+        navigate("/");
       },2000)
      
     

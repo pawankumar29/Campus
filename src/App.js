@@ -9,22 +9,13 @@ function App() {
  
   return (
     <Router>
-{/*       
-        <nav>
-          <ul>
-            <li>
-              <Link to="/dash">Home</Link>
-              
-            </li>
-            <li><Link to="/login">Login</Link></li>
-          </ul>
-        </nav> */}
+
               
         <Routes>
          <Route path="/dashboard" element={<PrivateRoute  Component={Dashboard}/>} />
           <Route path="/forgot" element={<ForgotPassword/>}  />   
-          <Route path="/login" element={<Login/>}  />  
-          <Route path="/" element={<ResetPassword/>}  /> 
+          <Route path="/" element={<Login/>}  />  
+          <Route path="/reset" element={<ResetPassword/>}  /> 
 
           {/* // necessary to give <LoginPage/> */}
            

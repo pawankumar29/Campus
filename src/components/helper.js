@@ -82,3 +82,16 @@
 
 
 // export default protectedRoute;
+
+
+//2
+{/*       
+        <nav>
+          <ul>
+            <li>
+              <Link to="/dash">Home</Link>
+              
+            </li>
+            <li><Link to="/login">Login</Link></li>
+          </ul>
+        </nav> */}
