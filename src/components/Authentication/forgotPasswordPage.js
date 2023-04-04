@@ -80,7 +80,7 @@ function ForgotPassword() {
           <br />
             
           <div>
-            <a onClick={() => navigate("/login")}>Back To Login</a>
+            <a onClick={() => navigate("/")}>Back To Login</a>
           </div>
 
           <ToastContainer/>
