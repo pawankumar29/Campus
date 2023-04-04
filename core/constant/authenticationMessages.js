@@ -6,6 +6,7 @@ export const authenicationMessage={
     DATA_SENT_SUCCESSFULLY:"Data send Successfully",
     INTERNAL_ERROR:"Internal Server Error",
     PASSWORD_NOT_MATCH:"password and confirm Password is different",
+    DATA_UPDATED:"Data Updated Successfully"
    
 
 }

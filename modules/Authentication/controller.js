@@ -9,9 +9,13 @@ import { sendMail } from "../../helpers/commonFunctions.js";
 
 class authenication{
 
-login = async (req, res) => {
+login = async (req, res,next) => {
      try {
 
+      if(!req.user){
+       res.send( res, httpStatus.BAD_REQUEST,0, "error")
+
+      }
        if (req.user) {
 
          const {_id, email} = req.user;
@@ -74,9 +78,9 @@ resetPassword=async(req,res)=>{
    
   try {
 
-    const {token,passowrd,confirmPassword}=req.body;
+    const {token,password,confirmPassword}=req.body;
       
-    if(passowrd===confirmPassword){
+    if(password===confirmPassword){
 
      const query={
       resetPasswordToken:token,
@@ -92,6 +96,8 @@ resetPassword=async(req,res)=>{
 
        await user.save();
 
+       response.response(res,httpStatus.OK,status.success,authenicationMessage.DATA_UPDATED)
+
      }
      else{
       throw new Error(authenicationMessage.DATA_NOT_FOUND)
@@ -101,7 +107,7 @@ resetPassword=async(req,res)=>{
     throw new Error(authenicationMessage.PASSWORD_NOT_MATCH)
     
   } catch (error) {
-    response.response(res,statusbar.BAD_REQUEST,status.fail,error.message);
+    response.response(res,httpStatus.BAD_REQUEST,status.fail,error.message);
   }
 }
 
