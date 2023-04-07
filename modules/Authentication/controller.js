@@ -74,9 +74,9 @@ resetPassword=async(req,res)=>{
    
   try {
 
-    const {token,passowrd,confirmPassword}=req.body;
+    const {token,password,confirmPassword}=req.body;
       
-    if(passowrd===confirmPassword){
+    if(password===confirmPassword){
 
      const query={
       resetPasswordToken:token,
@@ -88,10 +88,11 @@ resetPassword=async(req,res)=>{
      if(user){
        user.password=confirmPassword;
        user.resetPasswordToken=undefined;
-       user.resetPasswordTokenExpire=undefined;
+      //  user.resetPasswordTokenExpire=undefined;
 
        await user.save();
 
+ response.response(res,httpStatus.OK,status.success,authenicationMessage.DATA_SENT_SUCCESSFULLY)
      }
      else{
       throw new Error(authenicationMessage.DATA_NOT_FOUND)
@@ -101,7 +102,7 @@ resetPassword=async(req,res)=>{
     throw new Error(authenicationMessage.PASSWORD_NOT_MATCH)
     
   } catch (error) {
-    response.response(res,statusbar.BAD_REQUEST,status.fail,error.message);
+    response.response(res,httpStatus.BAD_REQUEST,status.fail,error.message);
   }
 }
 
