@@ -32,14 +32,15 @@ export const admin=mongoose.model("admin",adminSchema); // return constructor fu
 const fun=async()=>{
 
   const obj={
-    name:"pawan",
-    email:"pawan@yopmail.com",
-    password:123,
+    name:"jyoti",
+    email:"jyoti@yopmail.com",
+    password:12345678,
     institute:"63fded8d59b7dc26ed18d5a2"
   }
     await admin.create(obj);
 
 }
+
 
 
 

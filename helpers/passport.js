@@ -2,13 +2,15 @@ import passport from "passport";
 import { admin } from "../models/adminModel/adminSchema.js";
 import LocalStrategy from 'passport-local';
 import  bcrypt  from 'bcrypt'
+import { response } from "express";
 
 export function initialize(passport) {
   const authenticateUser=async (email, password, done) => {
-
+   
     const user = await admin.findOne({email:email});
     if (user == null) {
-      return done(null, false, { message: 'No user with that email' })
+      
+      return done(null, false,{ message: 'No user with that email' })
     }
     
     try {
