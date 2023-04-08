@@ -6,6 +6,9 @@ import Login from "./components/Authentication/loginPage.js";
 import ForgotPassword from './components/Authentication/forgotPasswordPage.js';
 import ResetPassword from './components/Authentication/resetPasswordPage.js';
 import Page from './components/Institute/page-1.js';
+
+
+
 function App() {
  
   return (
@@ -13,7 +16,9 @@ function App() {
 
               
         <Routes>
-         <Route path="/dashboard" element={<PrivateRoute  Component={Page}/>} />
+         {/* <Route path="/dashboard" element={<PrivateRoute  Component={Page}/>} /> */}
+         <Route path="/" element={<Page/>}  />   
+
           <Route path="/forgot" element={<ForgotPassword/>}  />   
           <Route path="/" element={<Login/>}  />  
           <Route path="/reset" element={<ResetPassword/>}  /> 

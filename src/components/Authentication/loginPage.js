@@ -48,7 +48,7 @@ function LoginAgain() {
          }
         }catch(error){
           console.log(JSON.stringify(error.response.data))
-          toast.error(JSON.stringify(error.response.data.message));
+          toast.error(JSON.stringify(error.response.data));
           localStorage.setItem("token",null);
         }
        

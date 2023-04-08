@@ -12,30 +12,6 @@
     border: 1px solid red;
     background-color: blue;
   }
-
-  .c1{
-    font-size: 20px;
-    text-align: center;
-    padding: 20px;
-    background-color: darkblue;
-    color: antiquewhite;
-  }
-
-  .container1 ul li{
-    padding:20px;
-    list-style: none;
-    color: antiquewhite;
-  }
-
-  .container1 ul li:hover{
-     background-color: antiquewhite;
-     color: blue;
-  }
-
-
-/*  container one ends*/
-
-
   .container2 {
     width: 80vw;
     height: 100vh;
@@ -128,7 +104,7 @@
 
  .searchBar{
   display: flex;
-  height:70px;
+  height:40px;
  
   padding: 16px;
   background-color:whitesmoke
@@ -156,6 +132,6 @@
   font-size: 12px;
  }
 
-.icon{
-  margin-right: 10px;
-}
+ input :placeholder-shown{
+  font-size: 2px;
+ }
