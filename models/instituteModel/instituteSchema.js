@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 const schema = mongoose.Schema;
 const date = new Date();
+
 const currentYear = date.getFullYear();
+let batch = `${currentYear - 1}-${currentYear.toString().substring(2, 4)}`;
 const institutesSchema = new schema(
   {
     university: { type: schema.Types.ObjectId, ref: "universities" },
@@ -17,7 +19,7 @@ const institutesSchema = new schema(
   },
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
-institutesSchema.index({ institute: 1 })
+institutesSchema.index({ institute: 1 });
 
 const organisationSchema = new schema(
   {

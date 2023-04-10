@@ -92,7 +92,7 @@ resetPassword=async(req,res)=>{
      if(user){
        user.password=confirmPassword;
        user.resetPasswordToken=undefined;
-       user.resetPasswordTokenExpire=undefined;
+      //  user.resetPasswordTokenExpire=undefined;
 
        await user.save();
 
