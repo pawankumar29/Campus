@@ -1,4 +1,8 @@
 import nodemailer from "nodemailer"
+import fs from "fs";
+import * as fast_csv from "fast-csv";
+import { cwd } from "process";
+import multer from "multer";
 
 export const sendMail=async(emailToSend,token,name)=>{
        
@@ -33,3 +37,104 @@ export const sendMail=async(emailToSend,token,name)=>{
 
 
 }
+
+
+export const readCsvFile=(file)=>{
+  
+  try {
+      const path=cwd()+"/"+file; // cwd for current directory
+   const documentDataArray=[];
+      const csvData=new Promise((resolve,reject)=>{
+          
+        const stream=fs.createReadStream(path); // it is needed to pass in the fromstream
+
+        fast_csv.parseStream(stream,{headers:true}).on("data",(data)=>{
+             documentDataArray.push(data);
+        }).on("end",()=>{
+          resolve(documentDataArray)
+        })
+
+
+      })
+
+      return csvData;
+  } catch (error) {
+    return {status:0,message:error.message}
+  }
+
+
+
+}
+
+
+ export const upload=multer({
+     storage:multer.diskStorage({
+      destination:function(req,file,cb){ // where you want to keep the data
+          cb(null,"public/studentUploads");
+     },
+     filename:function(req,file,cb){
+       cb(null,file.fieldname+"-"+Date.now()+".txt");
+     }
+  } )
+ }).single("studentFile"); // parameter on which you want to pick up the file 
+
+
+ export const findOne=async(model,query)=>{
+  try {
+      const result=await model.findOne(query);
+
+      if(result){
+          return {status:1,data:result}
+      }
+      else
+      throw new Error(null)
+      
+  } catch (error) {
+      return {status:0,data:null}
+  }
+
+}
+
+export const findWithPaginate=async(model,query,projection,page,limit)=>{
+ 
+  try {
+
+      const data=await model.find(query,projection).skip((page-1)*limit).limit(limit);
+
+      if(data){
+          return {status:1,data:data}
+      }
+      else
+      throw new Error(null)
+      
+  } catch (error) {
+      return {status:0,data:error.message};
+  }
+
+
+
+}
+
+export function validateEmail(email) {
+  var regex =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regex.test(String(email).toLowerCase()); //  test is a method that we use to compare the string with the pattern in regex
+}
+
+export const validateName = (name) => {
+  let regex = /^[a-zA-Z]+(?:[.\s]*[a-zA-Z]+)*$/;
+  return regex.test(name);
+};
+
+
+
+ // multer shortcut 
+//  multer({
+//     storage:{
+//       destination:function(req,file,cb),
+//       filename:function
+
+//     }
+
+ 
+//  })
