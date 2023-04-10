@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Style from "../../style/page-1.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBell, faTimes, faUser,faTable,faSchool ,faQuestionCircle,faWalkieTalkie, faGear} from "@fortawesome/free-solid-svg-icons";
+import { faBell, faSearch,faTimeline, faUser,faTable,faSchool ,faQuestionCircle,faWalkieTalkie, faGear} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 import DatePicker from 'react-datepicker';
