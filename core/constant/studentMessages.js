@@ -6,6 +6,6 @@ export const studentMessage={
     INVALID_NAME:"Invalid Name kindly enter the correct name",
     INVALID_DATE:"Invalid Date enter date in correct format of day/month/year",
     INVALID_EMAIL:"Invalid Email ",
-    DATE_FORMAT:"dd/mm/yyyy"
+    DATE_FORMAT:"DD/MM/YYYY" // this should be in capital lettar only
 
 }

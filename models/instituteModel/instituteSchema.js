@@ -13,7 +13,7 @@ const institutesSchema = new schema(
     tpo_phone_number: { type: String, required: true },
     qualification: [{ type: String, default: "" }],
     status: { type: Number, default: 1 },
-    isDeleted: { type: Number, default: 0 },
+    is_deleted: { type: Number, default: 0 },
     batch: { type: Number, default: currentYear }, // to save the current year in the institute.
     studentCount: { type: Number, default: 0 },
   },

@@ -31,12 +31,12 @@ export const validateStudentData=(studentDataArray)=>{
           if (obj["email"] && !validateEmail(obj["email"])) {
             error.push({ message: studentMessage.INVALID_EMAIL, data: obj });
           }
-        //   if (
-        //     obj["dob"] &&
-        //     !moment(obj["dob"], studentMessage.DATE_FORMAT, true).isValid()
-        //   ) {
-        //     error.push({ message: studentMessage.INVALID_DATE, data: obj });
-        //   }
+          if (
+            obj["dob"] &&
+            !moment(obj["dob"], studentMessage.DATE_FORMAT, true).isValid()
+          ) {
+            error.push({ message: studentMessage.INVALID_DATE, data: obj });
+          }
         
     
 
@@ -46,7 +46,7 @@ export const validateStudentData=(studentDataArray)=>{
             return {status:0,Error:error}
         }
         else{
-            return {status:1}
+            return {status:1,data:studentDataArray}
         }
          
 

@@ -87,22 +87,7 @@ const studentSchema = new schema(
       type: mongoose.Types.ObjectId,
       ref: "institutes",
     },
-    // walkings_id: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "walkings",
-    // },
-    // institute_name: {
-    //   type: String,
-    //   default: "",
-    // },
-    //    type: {type: Number, default: 2, enum: [1, 2]}, // 1-admin,2-appuser
-    // role: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "roles",
-    // },
-    // permissions: {
-    //   type: [Schema.Types.ObjectId],
-    // },
+   
     push_notification: { type: Number, default: 1 },
     cgpa: { type: String, default: "" },
     device_token: {

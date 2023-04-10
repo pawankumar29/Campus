@@ -9,7 +9,7 @@ import { status } from "../../helpers/commonVariables.js";
 import { institute } from "../../models/instituteModel/instituteSchema.js";
 import { validateStudentData } from "../../models/studentModel/studentModel.js";
 import { students } from "../../models/studentModel/studentSchema.js";
-import { university } from "../../models/universityModel/universitySchema.js";
+import {  university} from "../../models/universityModel/universitySchema.js";
 import response from "../../response-handlers/response.js";
 
 class instituteController {
@@ -37,7 +37,7 @@ class instituteController {
       };
 
       const isUniversityExist = await findOne(university, idOnly);
-        console.log(isUniversityExist);
+       
       if (isUniversityExist.status) {
         data.university = isUniversityExist.data;
 
@@ -46,24 +46,33 @@ class instituteController {
           university: data.university,
         };
         const checkInstituteExistAlready = await findOne(institute, query);
-      console.log("c--->",checkInstituteExistAlready);
+   
         if (!checkInstituteExistAlready.status) {
-          await institute.create(data);
+         
 
           const file_path = req.file.path;
 
           const dataFromFile = await readCsvFile(file_path);
+          data.studentCount=dataFromFile.length;
+
+          const instituteData= await institute.create(data);
 
           if (dataFromFile.length) { 
             const validatedStudentData = validateStudentData(dataFromFile);
+            validatedStudentData.data.forEach(element => {
+              element.institute_id=instituteData._id;
+            });
+        
+          
             if (validatedStudentData.status) {
-              await students.insertMany(validatedStudentData);
+            
+              await students.insertMany(validatedStudentData.data);
               response.response(
                 res,
                 StatusCodes.OK,
                 status.success,
                 instituteMessage.DATA_ADDED,
-                result.data
+                
               );
             } else {
               throw new Error(JSON.stringify(validatedStudentData.Error));
@@ -102,7 +111,12 @@ class instituteController {
         qualification: 1,
         tpo_name: 1,
         studentCount: 1,
+        university:1
       };
+       
+     
+      const results=await institute.findOne(query,project);
+      console.log("r-->",results);
       const result = await findWithPaginate(
         institute,
         query,
@@ -112,6 +126,16 @@ class instituteController {
       );
 
       if (result.status) {
+        
+        // university adding
+
+        result.data.forEach(async(data)=>{
+              const universityData=await university.findOne({_id:data.university});
+              console.log("u--->",universityData)
+                   data["universityName"]=universityData.name
+                   console.log("d-->",data);
+        })
+           console.log("k--->",result.data)
         response.response(
           res,
           StatusCodes.OK,
