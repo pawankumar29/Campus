@@ -27,7 +27,7 @@ export const passwordValidation=(values,passwordCounter)=>{
 
 export const loginResponseValidation=(values)=>{
  const error={};
-     if(!values.token){
+     if(values.email==""){
        error.loginError="Invalid Email id/Password"
      }
 

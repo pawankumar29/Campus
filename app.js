@@ -7,6 +7,7 @@ import passport from "passport";
 import session from "express-session";
 import authenticationrouter from "./modules/Authentication/router.js";
 import { initialize } from "./helpers/passport.js";
+import InstituteRouter from "./modules/Institute/router.js"
 import cors from "cors";
 dotenv.config();
 dbConnect();
@@ -29,6 +30,7 @@ initialize(passport);
 
 //routers
 app.use("/v1",authenticationrouter);
+app.use("/v1/institute",InstituteRouter)
 
 app.listen(process.env.PORT, () => {
   console.log(`app is listening at ${process.env.PORT}`);

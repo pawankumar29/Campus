@@ -6,6 +6,10 @@ import forgotStyle from "../../style/forgotPassword.module.css";
 import forgot from "../../img/forgot.jpg";
 import { forgotPasswordValidation } from "./loginValidation";
 import axios from "axios"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 function ForgotPassword() {
   const [email,setEmail]=useState("");
   const [forgotError, setForgotError] = useState({});
@@ -15,27 +19,41 @@ function ForgotPassword() {
   const handleChange=(e)=>{
       setEmail(e.target.value);
   }
-
+ 
+ 
   const handleSubmit =async(e) => {
     e.preventDefault();
       setForgotError(forgotPasswordValidation(email));
      if(!forgotError.forgotError){
+      try{
       const values={
         "email":email
       }
      const result=await axios.post("http://localhost:3035/v1/forgot-password",values);
 
      if(result.status){
-        navigate("/login"); // flash message
-     }
-     else{
+      // return toast.success("Link Sent Successfully");
+  
+      toast.success("success")
+      
+      setTimeout(()=>{
+        navigate("/");
+      },2000)
+     
     
-      displayError({message:"wrong Email"})
+     }
+    }
+    catch(error){
+     
+      return toast.error(error.response.data.message);
+    
+     
      }
 
      }
   };
 
+ 
   return (
     <div className={forgotStyle.parent}>
       <div className={forgotStyle.div1}>
@@ -62,8 +80,10 @@ function ForgotPassword() {
           <br />
             
           <div>
-            <a onClick={() => navigate("/login")}>Back To Login</a>
+            <a onClick={() => navigate("/")}>Back To Login</a>
           </div>
+
+          <ToastContainer/>
         </div>
       </div>
     </div>
@@ -73,3 +93,5 @@ function ForgotPassword() {
 export default ForgotPassword;
 
 
+// how to use toastify
+// import css and component write component at the last and use toast.success and toast.error 
