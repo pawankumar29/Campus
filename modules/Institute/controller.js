@@ -59,6 +59,7 @@ class instituteController {
 
           if (dataFromFile.length) { 
             const validatedStudentData = validateStudentData(dataFromFile);
+            if(validatedStudentData.status)
             validatedStudentData.data.forEach(element => {
               element.institute_id=instituteData._id;
             });
