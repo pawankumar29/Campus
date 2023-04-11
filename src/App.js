@@ -6,21 +6,22 @@ import Login from "./components/Authentication/loginPage.js";
 import ForgotPassword from './components/Authentication/forgotPasswordPage.js';
 import ResetPassword from './components/Authentication/resetPasswordPage.js';
 import Page from './components/Institute/page-1.js';
-
+import SignUp from "./components/helper.js"
+import AddInstitute from './components/Institute/addInstitutePage.js';
 
 
 function App() {
  
   return (
     <Router>
-
+        
               
         <Routes>
-         {/* <Route path="/dashboard" element={<PrivateRoute  Component={Page}/>} /> */}
-         <Route path="/" element={<Page/>}  />   
+         <Route path="/dashboard" element={<PrivateRoute  Component={Page}/>} />
+         
 
           <Route path="/forgot" element={<ForgotPassword/>}  />   
-          <Route path="/" element={<Login/>}  />  
+          <Route path="/" element={<AddInstitute/>}  />  
           <Route path="/reset" element={<ResetPassword/>}  /> 
 
           {/* // necessary to give <LoginPage/> */}
