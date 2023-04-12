@@ -1,0 +1,202 @@
+
+
+.parent{
+    display:flex;
+    margin:0;
+    padding: 0;
+
+}
+
+.firstDiv{
+  
+        width: 20vw;
+        height: 100vh;
+        border: 1px solid red;
+        background-color: blue;
+      
+
+}
+.icon{
+    margin-right: 10px;
+  }
+  .c1{
+    font-size: 20px;
+    text-align: center;
+    padding: 20px;
+    background-color: darkblue;
+    color: antiquewhite;
+  }
+
+  .firstDiv ul li{
+    padding:20px;
+    list-style: none;
+    color: antiquewhite;
+  }
+
+  .firstDiv ul li:hover{
+     background-color: antiquewhite;
+     color: blue;
+  }
+
+
+  /* first div completed
+ */
+.secondDiv{
+    width: 80vw;
+    height: 100vh;
+    border: 1px solid red;
+}
+
+
+/*header */
+
+  /*  header section */
+  .header {
+    width: 100%;
+    height: 6%;
+    box-sizing: border-box;
+    border: 1px solid blue;
+  }
+
+  .profile p{
+    display:block;
+    /* border:1px solid red; */
+    display:inline;
+    float:right;
+    margin:10px 20px;
+   
+  }
+
+
+  .bell{
+    float:right;
+    display:inline;
+    /* border:1px solid blue; */
+    margin:10px 10px;
+    padding:0 10px;
+  }
+  
+  .profile p:hover{
+   background-color: aquamarine;
+   
+  }
+
+
+  sup{
+    color: red;
+  }
+
+  /* second div first div*/
+  .two1{
+    display: flex;
+
+  }
+
+  .two1 div{
+    margin-left: 40px;
+  }
+
+  label{
+    width: 116px;
+height: 17px;
+font-family: 'Lato';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 17px;
+
+
+
+color: #1F1F1F;
+  }
+
+
+  input{
+    width: 368px;
+height: 55px;
+box-sizing: border-box;
+background: #EFEFEF;
+border-radius: 5px;
+  }
+
+/* second div first div*/
+
+
+.two2{
+    display: flex;
+}
+.two2 div{
+    margin-left: 40px;
+  }
+
+.two3{
+    display: flex;
+}
+.two3 div{
+    margin-left: 40px;
+  }
+
+  textarea{
+    width: 368px;
+    height: 55px;
+    box-sizing: border-box;
+    background: #EFEFEF;
+    border-radius: 5px;
+  }
+  
+
+  .file .input{
+    width: 755px;
+    height: 158px;
+background: #EFEFEF;
+border: 1px dashed #0458B7;
+border-radius: 5px;
+
+
+  }
+
+  .file{
+    margin-left:40px;
+  }
+
+  .file .input input {
+    text-align: center;
+    margin-top:20px;
+   margin-left: 278px;
+
+    height:30px;
+ 
+
+  }
+
+ .icon1{
+  display: flex;
+  margin-top:50px;
+   margin-left: 305px;
+    
+  
+
+  } 
+
+
+  /*button*/
+  .button{
+    display: flex;
+ 
+  }
+  .button button{
+    margin-left: 30px;
+    display: inline;
+    float: left;
+    width: 135px;
+height: 55px;
+background: #0458B7;
+border-radius: 5px;
+color: #EFEFEF;
+  }
+
+  .button button:hover{
+     background-color: #EFEFEF;
+     color:black
+
+  }

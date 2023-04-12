@@ -7,7 +7,7 @@ import ForgotPassword from './components/Authentication/forgotPasswordPage.js';
 import ResetPassword from './components/Authentication/resetPasswordPage.js';
 import Page from './components/Institute/page-1.js';
 import SignUp from "./components/helper.js"
-import AddInstitute from './components/Institute/addInstitutePage.js';
+import AddInstitute from './components/Institute/addInstitutePage1.js';
 
 
 function App() {
