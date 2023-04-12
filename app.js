@@ -15,6 +15,7 @@ dbConnect();
 const app = express();
 
 app.use(express.json()); // to get the json data
+app.use(express.urlencoded({extended:true}));
 app.use(cors());
 app.use(session({
   secret: 'my-secret-key',

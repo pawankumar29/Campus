@@ -1,2 +1,3 @@
 name,roll_no,father_name,qualification,branch,email,phone_no,dob,
 pawan,12,ks singh,btech,cse,pk@gmail.com,7750073475,29/09/2000
+jyoti,12,ks singh,btech,cse,pk@gmail.com,7750073475,29/09/2004

@@ -26,9 +26,9 @@ class instituteController {
         qualification: qualification,
         tpo_name: tpo_name,
       };
-
+       
       const findUniversityId = {
-        is_deleted: 0,
+        isDeleted: 0,
         name: data.university,
       };
 
@@ -37,7 +37,7 @@ class instituteController {
       };
 
       const isUniversityExist = await findOne(university, idOnly);
-       
+     
       if (isUniversityExist.status) {
         data.university = isUniversityExist.data;
 
@@ -46,15 +46,19 @@ class instituteController {
           university: data.university,
         };
         const checkInstituteExistAlready = await findOne(institute, query);
+       console.log("pawan-->",!checkInstituteExistAlready.status);
    
         if (!checkInstituteExistAlready.status) {
          
-
-          const file_path = req.file.path;
-
+         let file_path;
+           if(req.file.path)
+           file_path = req.file.path;
+          else
+          console.log("f--->",req.file);
+           
           const dataFromFile = await readCsvFile(file_path);
           data.studentCount=dataFromFile.length;
-
+          console.log("institute--->",dataFromFile);
           const instituteData= await institute.create(data);
 
           if (dataFromFile.length) { 
@@ -87,6 +91,7 @@ class instituteController {
 
 
     } catch (error) {
+      console.log(error.message);
       response.response(
         res,
         StatusCodes.BAD_REQUEST,
