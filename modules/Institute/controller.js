@@ -46,7 +46,7 @@ class instituteController {
           university: data.university,
         };
         const checkInstituteExistAlready = await findOne(institute, query);
-       console.log("pawan-->",!checkInstituteExistAlready.status);
+
    
         if (!checkInstituteExistAlready.status) {
          
@@ -58,7 +58,7 @@ class instituteController {
            
           const dataFromFile = await readCsvFile(file_path);
           data.studentCount=dataFromFile.length;
-          console.log("institute--->",dataFromFile);
+      
           const instituteData= await institute.create(data);
 
           if (dataFromFile.length) { 
@@ -107,7 +107,7 @@ class instituteController {
       const { page, limit } = req.body;
       const pageNo = page || instituteMessage.page;
       const limitOfPage = limit || instituteMessage.limit;
-
+   
       const query = {
         is_deleted: 0,
       };
@@ -121,8 +121,8 @@ class instituteController {
       };
        
      
-      const results=await institute.findOne(query,project);
-      console.log("r-->",results);
+
+   
       const result = await findWithPaginate(
         institute,
         query,
@@ -130,18 +130,48 @@ class instituteController {
         pageNo,
         limitOfPage
       );
-
+       
       if (result.status) {
         
         // university adding
 
-        result.data.forEach(async(data)=>{
-              const universityData=await university.findOne({_id:data.university});
-              console.log("u--->",universityData)
-                   data["universityName"]=universityData.name
-                   console.log("d-->",data);
-        })
-           console.log("k--->",result.data)
+        // result.data.forEach(async(data)=>{
+        //       const universityData=await university.findOne({_id:data.university});
+        //       console.log("u--->",universityData.name)
+        //            data["universityName"]=universityData.name
+        //            console.log("d-->",data);
+        // })
+
+
+        //---------------
+
+      //  const data1= await Promise.all(result.data.map(async (data,i,arr) => {
+      //     const universityData = await university.findOne({ _id: data.university });
+      //     // console.log("u--->", universityData.name)
+      //     arr[i].e= universityData.name;
+      //     return universityData.name;
+      //     // console.log("d-->", data);
+      //   }));
+      // console.log("r--->",result.data[0].university);
+      //   result.data[0].institute="Ptu";
+
+
+      //-------------------------
+      const universityDataPromises = result.data.map(async (data) => {
+        const universityData = await university.findOne({ _id: data.university });
+        return universityData;
+    });
+
+    // Wait for all promises to resolve
+    const universityDataArr = await Promise.all(universityDataPromises);
+
+    // Add universityName field to each result item
+    result.data.forEach((data, i) => {
+        data["universityName"] = universityDataArr[i].name;
+    });
+
+
+
         response.response(
           res,
           StatusCodes.OK,
@@ -149,7 +179,7 @@ class instituteController {
           instituteMessage.DATA_FOUND,
           result.data
         );
-      }
+        } 
     } catch (error) {
       response.response(
         res,
