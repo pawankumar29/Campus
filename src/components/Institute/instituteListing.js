@@ -3,7 +3,7 @@ import Style from "../../style/page-1.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faBell, faSearch,faTimeline, faUser,faTable,faSchool ,faQuestionCircle,faWalkieTalkie, faGear} from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -57,7 +57,7 @@ const Page = () => {
             <div className={Style.buttonDiv}>
               <button>Sample File</button>
               <button>Assign&Schedule Test</button>
-              <button>+Add Institutes</button>
+              <button><Link to={"/addInstitute"} style={{ textDecoration: 'none', color: 'inherit' }}>+Add Institute</Link></button>
             </div>
           </div>
 

@@ -80,7 +80,7 @@ function ForgotPassword() {
           <br />
             
           <div>
-            <a onClick={() => navigate("/")}>Back To Login</a>
+            <a className={forgotStyle.link} onClick={() => navigate("/")}>Back To Login</a>
           </div>
 
           <ToastContainer/>

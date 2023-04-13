@@ -33,7 +33,7 @@ function LoginAgain() {
       "email":email,
       "password":password
     }
-    // setLoginError(loginResponseValidation(values))
+    setLoginError(loginResponseValidation(values))
       if(Object.keys(error).length==0&&(values.email!=""&&values.password!="")){
 
         try{
@@ -43,11 +43,11 @@ function LoginAgain() {
           toast.success("login Successful");
           setTimeout(()=>{
             navigate("/dashboard");
-          },2000)
+          },1000)
             
          }
         }catch(error){
-          console.log(JSON.stringify(error.response.data))
+      
           toast.error(JSON.stringify(error.response.data));
           localStorage.setItem("token",null);
         }
@@ -83,10 +83,8 @@ function LoginAgain() {
     "email":email,
     "password":password
   }
-  setLoginError(loginResponseValidation(values))
-  console.log("pawan");
-  console.log("l--?>",loginError)
-  console.log("o--->",Object.keys(loginError).length)
+  // setLoginError(loginResponseValidation(values))
+
  },[email,password])
  
   return (
@@ -132,6 +130,8 @@ function LoginAgain() {
           <p style={{ color: "red", fontSize: "13px" }}>{loginError.loginError}</p>
         ))}
         </div>
+        <br/>
+        <br/>
        <div className={style.loginButton}><button onClick={submit}>Submit</button></div> 
       </div>
       <br/>

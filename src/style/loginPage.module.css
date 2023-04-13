@@ -6,17 +6,23 @@
     align-items: center;
     justify-content: center;
     overflow-y: hidden;
+    background-color: beige;
 }
 
 .container{
     border:3px solid rgb(14, 13, 13);
-    padding:5%;
+    padding:2%;
     border-radius: 40px;
+ 
     
 }
 
 .forgot {
-    float:right
+    float:right;
+    text-decoration: underline;
+    color: blue;
+
+
 }
 .loginImage img{
   
@@ -37,7 +43,9 @@
     background-color: blue;
     color: aliceblue;
     border-radius: 10px;
-    padding :7%;
+    padding :5%;
+    width:150px;
+
 }
 
 .error{
@@ -45,6 +53,10 @@
    font-weight: 800;
    font-size: 80px;
 }
+/* input{
+    width:70%;
+    margin-left:10px;
+} */
 
 @media  screen and (max-width:864px) {
     .container{

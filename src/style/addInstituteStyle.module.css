@@ -113,7 +113,7 @@ color: #1F1F1F;
 
   input{
     width: 368px;
-height: 55px;
+height: 25px;
 box-sizing: border-box;
 background: #EFEFEF;
 border-radius: 5px;
@@ -138,7 +138,7 @@ border-radius: 5px;
 
   textarea{
     width: 368px;
-    height: 55px;
+    height: 25px;
     box-sizing: border-box;
     background: #EFEFEF;
     border-radius: 5px;
@@ -146,7 +146,7 @@ border-radius: 5px;
   
 
   .file .input{
-    width: 755px;
+    width: 758px;
     height: 158px;
 background: #EFEFEF;
 border: 1px dashed #0458B7;
@@ -189,7 +189,7 @@ border-radius: 5px;
     display: inline;
     float: left;
     width: 135px;
-height: 55px;
+height: 10%;
 background: #0458B7;
 border-radius: 5px;
 color: #EFEFEF;
@@ -200,3 +200,9 @@ color: #EFEFEF;
      color:black
 
   }
+
+  .error{
+    color: red;
+  }
+
+

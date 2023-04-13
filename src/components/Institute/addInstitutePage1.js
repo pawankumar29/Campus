@@ -17,7 +17,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import addInstituteStyle from "../../style/addInstituteStyle.module.css";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const validationSchema = Yup.object().shape({
   university: Yup.string()
     .required("Required")
@@ -40,7 +43,7 @@ const validationSchema = Yup.object().shape({
 const AddInstitute = () => {
 
     const [file,setFile]=useState(null);
-  
+  const navigate=useNavigate();
     const handleDrop=(e)=>{
         e.preventDefault();
         const droppedFile = e.dataTransfer.files[0];
@@ -81,14 +84,24 @@ const AddInstitute = () => {
       console.log(...formData);
 
       const response=await axios.post("http://localhost:3035/v1/institute/addInstitute",formData);
-      console.log("a-->",JSON.stringify(response.response.data))
+      
+      toast.success(response.data.message);
 
-      Navigate("/");
+      if(response.data.status){
+    
+        setTimeout(()=>{
+          navigate("/dashboard");
+        },2000)
+          
+       }
+       else
+       throw response;
       
 
     //   resetForm();
     }catch (error) {
-           alert(JSON.stringify(error.response.data)); 
+      toast.error(JSON.stringify(error.response.data.message));
+          //  alert(JSON.stringify(error.response.data)); 
     }
   }
 }
@@ -190,13 +203,13 @@ const AddInstitute = () => {
                     value={formik.values.institute}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                  >
+                  />
                     {formik.touched.institute && formik.errors.institute && (
                       <div className={addInstituteStyle.error}>
                         {formik.errors.institute}
-                      </div>
+                      </div>  // never write the error inside the input 
                     )}
-                  </input>
+             
                 </div>
               </div>
 
@@ -216,7 +229,7 @@ const AddInstitute = () => {
                     onBlur={formik.handleBlur}
                   />
                   {formik.touched.tpo_name && formik.errors.tpo_name && (
-                    <div>{formik.errors.tpo_name}</div>
+                    <div className={addInstituteStyle.error}>{formik.errors.tpo_name}</div>
                   )}
                 </div>
 
@@ -234,7 +247,7 @@ const AddInstitute = () => {
                     onBlur={formik.handleBlur}
                   />
                   {formik.touched.tpo_email && formik.errors.tpo_email && (
-                    <div>{formik.errors.tpo_email}</div>
+                    <div className={addInstituteStyle.error}>{formik.errors.tpo_email}</div>
                   )}
                 </div>
               </div>
@@ -256,7 +269,7 @@ const AddInstitute = () => {
                   />
                   {formik.touched.tpo_phone_number &&
                     formik.errors.tpo_phone_number && (
-                      <div>{formik.errors.tpo_phone_number}</div>
+                      <div className={addInstituteStyle.error}>{formik.errors.tpo_phone_number}</div>
                     )}
                 </div>
                 <div>
@@ -275,7 +288,7 @@ const AddInstitute = () => {
                   />
                   {formik.touched.qualification &&
                     formik.errors.qualification && (
-                      <div>{formik.errors.qualification}</div>
+                      <div className={addInstituteStyle.error}>{formik.errors.qualification}</div>
                     )}
                 </div>
               </div>
@@ -310,6 +323,7 @@ const AddInstitute = () => {
           </div>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 };
