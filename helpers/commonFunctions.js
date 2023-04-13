@@ -43,6 +43,7 @@ export const readCsvFile=(file)=>{
   
   try {
       const path=cwd()+"/"+file; // cwd for current directory
+      console.log("file--->",path);
    const documentDataArray=[];
       const csvData=new Promise((resolve,reject)=>{
           
