@@ -46,22 +46,23 @@ class instituteController {
           university: data.university,
         };
         const checkInstituteExistAlready = await findOne(institute, query);
-        console.log("pawan-->", !checkInstituteExistAlready.status);
 
+   
         if (!checkInstituteExistAlready.status) {
           let file_path;
           if (req.file.path) file_path = req.file.path;
           else console.log("f--->", req.file);
 
           const dataFromFile = await readCsvFile(file_path);
-          data.studentCount = dataFromFile.length;
-          console.log("institute--->", dataFromFile);
-          const instituteData = await institute.create(data);
+          data.studentCount=dataFromFile.length;
+      
+          const instituteData= await institute.create(data);
 
           if (dataFromFile.length) {
             const validatedStudentData = validateStudentData(dataFromFile);
-            validatedStudentData.data.forEach((element) => {
-              element.institute_id = instituteData._id;
+            if(validatedStudentData.status)
+            validatedStudentData.data.forEach(element => {
+              element.institute_id=instituteData._id;
             });
 
             if (validatedStudentData.status) {
@@ -218,7 +219,10 @@ class instituteController {
         institute_id: "$_id",
         qualification: 1,
       };
+       
+     
 
+   
       const result = await findWithPaginate(
         institute,
         query,
@@ -226,7 +230,7 @@ class instituteController {
         pageNo,
         limitOfPage
       );
-
+       
       if (result.status) {
         // university adding
 
