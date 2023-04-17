@@ -51,7 +51,7 @@ login = async (req, res,next) => {
 
      checkUserExist.resetPasswordToken=token; 
      checkUserExist.resetPasswordTokenExpire=Date.now()+(30*60*1000) // converting time to milliseconds
-   
+       console.log("c--->",checkUserExist);
      await checkUserExist.save();
 
      // send email 
@@ -86,13 +86,13 @@ resetPassword=async(req,res)=>{
       resetPasswordToken:token,
       resetPasswordTokenExpire:{$gt:Date.now()}
      }
-
+       console.log("pass--->",query);
      const user=await admin.findOne(query); // here user is an instance to that object
-
+       
      if(user){
        user.password=confirmPassword;
        user.resetPasswordToken=undefined;
-      //  user.resetPasswordTokenExpire=undefined;
+       user.resetPasswordTokenExpire=undefined;
 
        await user.save();
 

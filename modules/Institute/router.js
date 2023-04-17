@@ -8,7 +8,9 @@ const Router=express.Router();
 
 Router.route("/addInstitute").post(upload,classObject.addInstitute);
 
-Router.route("/").get(classObject.getInstituteList);
+Router.route("/all_Institutes").get(classObject.getInstituteList);
+Router.route("/hiringInstitutes").get(classObject.getHiringInstituteList);
+Router.route("/deleteInstitute/:_id").delete(classObject.removeInstitute);
 
 
 export default Router;

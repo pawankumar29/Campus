@@ -1,120 +1,124 @@
-import nodemailer from "nodemailer"
+import nodemailer from "nodemailer";
 import fs from "fs";
 import * as fast_csv from "fast-csv";
 import { cwd } from "process";
 import multer from "multer";
+import instituteMessage from "../core/constant/instituteMessage.js";
 
-export const sendMail=async(emailToSend,token,name)=>{
-       
-    try {
-        const transporter = nodemailer.createTransport({
-            service: 'Gmail',
-            auth: {
-              user: process.env.EMAIL_USERNAME, // replace with your own Gmail username
-              pass: process.env.EMAIL_PASSWORD, // replace with your own Gmail password
-            },
-          });
-       const frontend_url=process.env.frontend_url
-          const message = {
-            from: process.env.EMAIL_FROM, // replace with your own Gmail address
-            to: emailToSend,
-            subject: 'Reset your password',
-            html: `
+export const sendMail = async (emailToSend, token, name) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.EMAIL_USERNAME, // replace with your own Gmail username
+        pass: process.env.EMAIL_PASSWORD, // replace with your own Gmail password
+      },
+    });
+    const frontend_url = process.env.frontend_url;
+    const message = {
+      from: process.env.EMAIL_FROM, // replace with your own Gmail address
+      to: emailToSend,
+      subject: "Reset your password",
+      html: `
               <p>Hi ${name},</p>
               <p>You have requested pawan to reset your password.</p>
               <p>Click <a href="http://localhost:3000/reset?token=${token}" style="color:blue; text-decoration:underline">here</a> to reset your password.</p>
               <p>If you did not request this, please ignore this email.</p>
             `,
-          };
-          
-          transporter.sendMail(message);
+    };
 
-          return {status:1}
-        
-    } catch (error) {
-        return {status:0,message:error.message}
-    }
+    transporter.sendMail(message);
 
+    return { status: 1 };
+  } catch (error) {
+    return { status: 0, message: error.message };
+  }
+};
 
-}
-
-
-export const readCsvFile=(file)=>{
-  
+export const readCsvFile = (file) => {
   try {
-      const path=cwd()+"/"+file; // cwd for current directory
-      console.log("file--->",path);
-   const documentDataArray=[];
-      const csvData=new Promise((resolve,reject)=>{
-          
-        const stream=fs.createReadStream(path); // it is needed to pass in the fromstream
+    const path = cwd() + "/" + file; // cwd for current directory
+    console.log("file--->", path);
+    const documentDataArray = [];
+    const csvData = new Promise((resolve, reject) => {
+      const stream = fs.createReadStream(path); // it is needed to pass in the fromstream
 
-        fast_csv.parseStream(stream,{headers:true}).on("data",(data)=>{
-             documentDataArray.push(data);
-        }).on("end",()=>{
-          resolve(documentDataArray)
+      fast_csv
+        .parseStream(stream, { headers: true })
+        .on("data", (data) => {
+          documentDataArray.push(data);
         })
+        .on("end", () => {
+          resolve(documentDataArray);
+        });
+    });
 
-
-      })
-
-      return csvData;
+    return csvData;
   } catch (error) {
-    return {status:0,message:error.message}
+    return { status: 0, message: error.message };
   }
+};
 
+export const upload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      // where you want to keep the data
+      cb(null, "public/studentUploads");
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + "-" + Date.now() + ".txt");
+    },
+  }),
+}).single("studentFile"); // parameter on which you want to pick up the file
 
-
-}
-
-
- export const upload=multer({
-     storage:multer.diskStorage({
-      destination:function(req,file,cb){ // where you want to keep the data
-          cb(null,"public/studentUploads");
-     },
-     filename:function(req,file,cb){
-       cb(null,file.fieldname+"-"+Date.now()+".txt");
-     }
-  } )
- }).single("studentFile"); // parameter on which you want to pick up the file 
-
-
- export const findOne=async(model,query)=>{
+export const findOne = async (model, query) => {
   try {
-      const result=await model.findOne(query);
+    const result = await model.findOne(query);
 
-      if(result){
-          return {status:1,data:result}
-      }
-      else
-      throw new Error(null)
-      
+    if (result) {
+      return { status: 1, data: result };
+    } else throw new Error(null);
   } catch (error) {
-      return {status:0,data:null}
+    return { status: 0, data: null };
   }
+};
 
-}
-
-export const findWithPaginate=async(model,query,projection,page,limit)=>{
- 
+export const findWithPaginate = async (
+  res,
+  model,
+  query,
+  projection,
+  page,
+  limit
+) => {
   try {
+    const skip = (page - 1) * limit;
 
-      const data=await model.find(query,projection).skip((page-1)*limit).limit(limit);
+    const pipeline = [
+      { $match: query },
+      {
+        $lookup: {
+          from: "universities",
+          localField: "university",
+          foreignField: "_id",
+          as: "university_data",
+        },
+      },
+      { $unwind: "$university_data" },
+      {
+        $project: projection,
+      },
+      { $skip: skip },
+      { $limit: limit },
+    ];
 
-      if(data){
-          return {status:1,data:data}
-      }
-      else
-      throw new Error(null)
-      
+    const result = await model.aggregate(pipeline);
+
+    return { status: 1, data: result };
   } catch (error) {
-      return {status:0,data:error.message};
+    return { status: 0, data: error.message };
   }
-
-
-
-}
+};
 
 export function validateEmail(email) {
   var regex =
@@ -127,9 +131,19 @@ export const validateName = (name) => {
   return regex.test(name);
 };
 
+export const deleteOne = async (model, query) => {
+  try {
+    const result = await model.updateOne(query,{is_deleted:1});
+    console.log("r--->");
+    if (result) {
+      return { status: 1, message: instituteMessage.DELETED };
+    } else throw new Error(instituteMessage.DATA_NOT_FOUND);
+  } catch (error) {
+    return { status: 0, message: error.message };
+  }
+};
 
-
- // multer shortcut 
+// multer shortcut
 //  multer({
 //     storage:{
 //       destination:function(req,file,cb),
@@ -137,5 +151,4 @@ export const validateName = (name) => {
 
 //     }
 
- 
 //  })
