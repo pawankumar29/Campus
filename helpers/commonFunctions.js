@@ -69,7 +69,7 @@ export const upload = multer({
       cb(null, file.fieldname + "-" + Date.now() + ".txt");
     },
   }),
-}).single("studentFile"); // parameter on which you want to pick up the file
+}) // parameter on which you want to pick up the file
 
 export const findOne = async (model, query) => {
   try {
@@ -83,8 +83,21 @@ export const findOne = async (model, query) => {
   }
 };
 
+export const find= async (model, query,projection) => {
+  try {
+    const result = await model.find(query,projection);
+
+    if (result) {
+      return { status: 1, data: result };
+    } else throw new Error(null);
+  } catch (error) {
+    return { status: 0, data: null };
+  }
+};
+
+
 export const findWithPaginate = async (
-  res,
+
   model,
   query,
   projection,
@@ -111,7 +124,7 @@ export const findWithPaginate = async (
       { $skip: skip },
       { $limit: limit },
     ];
-
+     
     const result = await model.aggregate(pipeline);
 
     return { status: 1, data: result };
@@ -142,6 +155,10 @@ export const deleteOne = async (model, query) => {
     return { status: 0, message: error.message };
   }
 };
+
+
+
+
 
 // multer shortcut
 //  multer({

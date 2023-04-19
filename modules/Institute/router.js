@@ -6,11 +6,13 @@ const Router=express.Router();
 
 
 
-Router.route("/addInstitute").post(upload,classObject.addInstitute);
+Router.route("/addInstitute").post(upload.single("studentFile"),classObject.addInstitute);
 
 Router.route("/all_Institutes").get(classObject.getInstituteList);
 Router.route("/hiringInstitutes").get(classObject.getHiringInstituteList);
 Router.route("/deleteInstitute/:_id").delete(classObject.removeInstitute);
+Router.route("/view_institute/:institute_id").get(classObject.viewInstitute);
+Router.route("/getEditInstitute/:institute_id").get(classObject.getEditInstitute);
 
 
 export default Router;
