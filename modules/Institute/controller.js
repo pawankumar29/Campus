@@ -5,7 +5,6 @@ import {
   deleteOne,
   find,
   findOne,
-
   findWithPaginate,
   readCsvFile,
 } from "../../helpers/commonFunctions.js";
@@ -17,7 +16,6 @@ import { validateStudentData } from "../../models/studentModel/studentModel.js";
 import { students } from "../../models/studentModel/studentSchema.js";
 import { university } from "../../models/universityModel/universitySchema.js";
 import response from "../../response-handlers/response.js";
-
 
 class instituteController {
   addInstitute = async (req, res) => {
@@ -53,38 +51,32 @@ class instituteController {
         };
         const checkInstituteExistAlready = await findOne(institute, query);
 
-       
         if (!checkInstituteExistAlready.status) {
-             
-
           let file_path;
           if (req.file.path) file_path = req.file.path;
-
-
+            
           const dataFromFile = await readCsvFile(file_path);
-          data.studentCount=dataFromFile.length;
-      
-          const instituteData= await institute.create(data);
-           
-          const tpoData={
+          data.studentCount = dataFromFile.length;
+   
+          const instituteData = await institute.create(data);
+
+          const tpoData = {
             tpo_email: tpo_email,
             institute: instituteData._id,
             tpo_phone_number: tpo_phone_number,
-            batch:instituteData.batch,
+            batch: instituteData.batch,
             tpo_name: tpo_name,
-            institute_id:instituteData._id
-          }
+            institute_id: instituteData._id,
+          };
 
-         const r1= await tpo.create(tpoData);
-
-
+          const r1 = await tpo.create(tpoData);
 
           if (dataFromFile.length) {
             const validatedStudentData = validateStudentData(dataFromFile);
-            if(validatedStudentData.status)
-            validatedStudentData.data.forEach(element => {
-              element.institute_id=instituteData._id;
-            });
+            if (validatedStudentData.status)
+              validatedStudentData.data.forEach((element) => {
+                element.institute_id = instituteData._id;
+              });
 
             if (validatedStudentData.status) {
               await students.insertMany(validatedStudentData.data);
@@ -123,7 +115,7 @@ class instituteController {
       const EndDate = endDate || "";
 
       let query;
-      let checkstatus=0;
+      let checkstatus = 0;
 
       const project = {
         institute: 1,
@@ -135,9 +127,8 @@ class instituteController {
       const dateSortProject = {
         institute: 1,
         qualification: 1,
-        university:1,
+        university: 1,
         institute_id: "$_id",
-        
       };
 
       if (Search && Search != "") {
@@ -148,8 +139,8 @@ class instituteController {
             {
               qualification: { $elemMatch: { $regex: Search, $options: "i" } },
             },
-    
-            { batch: isNaN(Number(Search)) ? null : Number(Search) },// checking if a number
+
+            { batch: isNaN(Number(Search)) ? null : Number(Search) }, // checking if a number
           ],
         };
       } else if (StartDate && EndDate && StartDate != "" && EndDate != "") {
@@ -175,67 +166,65 @@ class instituteController {
         // Get the ISO string representation of the date
         const isoDate1 = date1.toISOString();
         const isoDate2 = date2.toISOString();
-        checkstatus=1;
+        checkstatus = 1;
         query = {
           // time handled
           is_deleted: 0,
-       
+
           $expr: {
             $and: [
               {
-                $gte: ["$created_at",isoDate1],
+                $gte: ["$created_at", isoDate1],
               },
               {
                 $lte: ["$created_at", isoDate2],
               },
             ],
           },
-
-     
         }; // here if we are using gte or lte in any gate use $expr
       } else {
         query = {
           is_deleted: 0,
         };
       }
-   
-   if(checkstatus){
-   let dateData=await institute.find(query,dateSortProject).populate("university","name");
-  dateData=JSON.parse(JSON.stringify(dateData));
-   dateData.forEach((d)=>{
-    d.university=d.university.name;
-   })
- 
-   response.response(
-    res,
-    StatusCodes.OK,
-    status.success,
-    instituteMessage.DATA_FOUND,
-    dateData
-  );
-      
-  }
-   else{
-      const result = await findWithPaginate(
-        institute,
-        query,
-        project,
-        pageNo,
-        limitOfPage
-      );
 
-      if (result.status) {
-        // university adding
+      if (checkstatus) {
+        let dateData = await institute
+          .find(query, dateSortProject)
+          .populate("university", "name");
+        dateData = JSON.parse(JSON.stringify(dateData));
+        dateData.forEach((d) => {
+          d.university = d.university.name;
+        });
 
         response.response(
           res,
           StatusCodes.OK,
           status.success,
           instituteMessage.DATA_FOUND,
-          result.data
+          dateData
         );
-      } else throw new Error(result.data);
-    }
+      } else {
+        const result = await findWithPaginate(
+          institute,
+          query,
+          project,
+          pageNo,
+          limitOfPage
+        );
+
+        if (result.status) {
+          // university adding
+
+          response.response(
+            res,
+            StatusCodes.OK,
+            status.success,
+            instituteMessage.DATA_FOUND,
+            result.data
+          );
+        } else throw new Error(result.data);
+      }
     } catch (error) {
       response.response(
         res,
@@ -248,7 +237,7 @@ class instituteController {
 
   getHiringInstituteList = async (req, res) => {
     try {
-      const { page, limit,startDate,endDate,searchBy } = req.query;
+      const { page, limit, startDate, endDate, searchBy } = req.query;
 
       const pageNo = page || instituteMessage.PAGE;
       const limitOfPage = limit || instituteMessage.LIMIT;
@@ -256,9 +245,8 @@ class instituteController {
       const StartDate = startDate || "";
       const EndDate = endDate || "";
 
-  
-let checkstatus=0;
-   let query;
+      let checkstatus = 0;
+      let query;
 
       const project = {
         institute: 1,
@@ -268,7 +256,7 @@ let checkstatus=0;
         institute_id: "$_id",
         qualification: 1,
       };
-       
+
       if (Search && Search != "") {
         query = {
           is_deleted: 0,
@@ -277,8 +265,8 @@ let checkstatus=0;
             {
               qualification: { $elemMatch: { $regex: Search, $options: "i" } },
             },
-    
-            { tpo_name: { $regex: Search, $options: "i" } }
+
+            { tpo_name: { $regex: Search, $options: "i" } },
           ],
         };
       } else if (StartDate && EndDate && StartDate != "" && EndDate != "") {
@@ -304,67 +292,67 @@ let checkstatus=0;
         // Get the ISO string representation of the date
         const isoDate1 = date1.toISOString();
         const isoDate2 = date2.toISOString();
-        checkstatus=1;
+        checkstatus = 1;
         query = {
           // time handled
           is_deleted: 0,
-       
+
           $expr: {
             $and: [
               {
-                $gte: ["$created_at",isoDate1],
+                $gte: ["$created_at", isoDate1],
               },
               {
                 $lte: ["$created_at", isoDate2],
               },
             ],
           },
-
-     
         }; // here if we are using gte or lte in any gate use $expr
       } else {
         query = {
           is_deleted: 0,
-       
         };
       }
-     
- query.batch=new Date().getFullYear();
-  
-   if(checkstatus){
-    let dateData=await institute.find(query,project).populate("university","name");
-   dateData=JSON.parse(JSON.stringify(dateData));
-    dateData.forEach((d)=>{
-     d.university=d.university.name;
-    })
-  
-    response.response(
-     res,
-     StatusCodes.OK,
-     status.success,
-     instituteMessage.DATA_FOUND,
-     dateData
-   );}
-   else{
-      const result = await findWithPaginate(
-        institute,
-        query,
-        project,
-        pageNo,
-        limitOfPage
-      );
-       
-      if (result.status) {
-        // university adding
+
+      query.batch = new Date().getFullYear();
+
+      if (checkstatus) {
+        let dateData = await institute
+          .find(query, project)
+          .populate("university", "name");
+        dateData = JSON.parse(JSON.stringify(dateData));
+        dateData.forEach((d) => {
+          d.university = d.university.name;
+        });
 
         response.response(
           res,
           StatusCodes.OK,
           status.success,
           instituteMessage.DATA_FOUND,
-          result.data
+          dateData
         );
-      } else throw new Error(result.data);}
+      } else {
+        const result = await findWithPaginate(
+          institute,
+          query,
+          project,
+          pageNo,
+          limitOfPage
+        );
+
+        if (result.status) {
+          // university adding
+
+          response.response(
+            res,
+            StatusCodes.OK,
+            status.success,
+            instituteMessage.DATA_FOUND,
+            result.data
+          );
+        } else throw new Error(result.data);
+      }
     } catch (error) {
       response.response(
         res,
@@ -375,18 +363,17 @@ let checkstatus=0;
     }
   };
 
-  removeInstitute=async(req,res)=>{
-     try {
-      const institute_id=req.params._id;
-      const query={
-        _id:institute_id,
-        is_deleted:0
-      }
-     
+  removeInstitute = async (req, res) => {
+    try {
+      const institute_id = req.params._id;
+      const query = {
+        _id: institute_id,
+        is_deleted: 0,
+      };
 
-      const result=await deleteOne(institute,query);
+      const result = await deleteOne(institute, query);
 
-      if(result.status){
+      if (result.status) {
         response.response(
           res,
           StatusCodes.OK,
@@ -394,150 +381,143 @@ let checkstatus=0;
           instituteMessage.DELETED,
           result.data
         );
-      }
-      else
-      throw new Error(instituteMessage.DATA_NOT_FOUND);
-      
-     } catch (error) {
+      } else throw new Error(instituteMessage.DATA_NOT_FOUND);
+    } catch (error) {
       response.response(
         res,
         StatusCodes.BAD_REQUEST,
         status.fail,
         error.message
       );
-     }
+    }
+  };
 
-
-  }
-
-  viewInstitute=async(req,res)=>{
+  viewInstitute = async (req, res) => {
     try {
-        
-       const instituteId=req.params.institute_id;
+      const instituteId = req.params.institute_id;
 
-       const  projection={
-         tpo_name:1,
-         tpo_email:1,
-         tpo_phone_number:1,
-         batch:1,
-         institute_data:1,
-         _id:0
-       }
+      const projection = {
+        tpo_name: 1,
+        tpo_email: 1,
+        tpo_phone_number: 1,
+        batch: 1,
+        institute_data: 1,
+        _id: 0,
+      };
 
-  
+      const query = {
+        institute_id: new mongoose.Types.ObjectId(instituteId),
+      };
 
-       const query={
-          institute_id:new mongoose.Types.ObjectId(instituteId),
+      const result = await findTpoWithPaginate(tpo, query, projection, 1, 10);
+      result.data = JSON.parse(JSON.stringify(result.data));
+      if (result.data) {
+        result.data.forEach((d) => {
+          d.qualification = d.institute_data.qualification;
+          d.student_count = d.institute_data.studentCount;
+          d.batch = `${d.batch - 1}-${d.batch}`;
+          delete d.institute_data;
+        });
+      }
 
-       }
-            
-        const result= await findTpoWithPaginate(tpo,query,projection,1,10);
-       result.data=JSON.parse(JSON.stringify(result.data));
-        if(result.data){
-          
-          result.data.forEach((d)=>{
-             d.qualification=d.institute_data.qualification;
-             d.student_count=d.institute_data.studentCount;
-             d.batch=`${d.batch-1}-${d.batch}`;
-             delete d.institute_data;
-          })
+      if (result.status) {
+        response.response(
+          res,
+          StatusCodes.OK,
+          status.success,
+          instituteMessage.DATA_FOUND,
+          result.data
+        );
+      } else throw new Error(instituteMessage.DATA_NOT_FOUND);
+    } catch (error) {
+      response.response(
+        res,
+        StatusCodes.BAD_REQUEST,
+        status.fail,
+        error.message
+      );
+    }
+  };
 
-        }
+  uploadStudentFile = async (req, res) => {
+    try {
+      const institute_id = req.params.institute_id;
      
-        if(result.status){
-          response.response(
-            res,
-            StatusCodes.OK,
-            status.success,
-            instituteMessage.DATA_FOUND,
-            result.data
-          );
-          
-
-        }
-        else
-        throw new Error(instituteMessage.DATA_NOT_FOUND);
-
-
-
-    } catch (error) {
-      response.response(
-        res,
-        StatusCodes.BAD_REQUEST,
-        status.fail,
-        error.message
-      );
-      
-    }
-
-
-
-
-
-
-
-  }
-
-  uploadStudentFile=async(req,res)=>{
-    try {
-        
-      const institute_id=req.params.institute_id;
-
-      const institute_data=await find(institute,query);
-
-      if(institute_data.status){
-      const Qualification=req.body.qualification;
-
-
-
-
-      }
-
-    } catch (error) {
-      
-    }
-  }
-
-  getEditInstitute=async(req,res)=>{
-    
-    try {
-        
-      const institute_id=req.params.institute_id;
-
       const query={
         is_deleted:0,
         _id:institute_id
       }
-      const projection={
-        university:1,
-        institute:1,
-        tpo_name:1,
-        tpo_email:1,
-        tpo_phone_number:1,
-        qualification:1
+   
+
+      const institute_data = await institute.findOne(query)
+      // institute_data=JSON.parse(JSON.stringify(institute_data));
+
+      if (institute_data) {
+        const Qualification = req.body.qualification;
+
+        // checking qualification and inserting
+
+        const query = {
+          is_deleted: 0,
+          _id: institute_id,
+          qualification: { $in: Qualification},
+        };
+  
+        const result = await  findOne(institute, query);
+
+        if (result.status) {
+          res.send("not added");
+        } else {
+          const secondResult = await institute.updateOne(
+            { _id: institute_id },
+            { $push: { qualification: Qualification } },
+            { new: true }
+          );
+          res.send(secondResult);
+        }
       }
-
-      let result =await institute.find(query,projection).populate("university","name");
-      if(result.length){
-       result=JSON.parse(JSON.stringify(result))
-
-       result.forEach((d)=>{
-           d.university=d.university.name;
-       })
-       response.response(
-        res,
-        StatusCodes.OK,
-        status.success,
-        instituteMessage.DATA_FOUND,
-        result
-      );
-
+      else{
+        throw new Error("not exist institute");
       }
-      else
-      throw new Error(instituteMessage.DATA_NOT_FOUND);
-       
+    } catch (error) {
+      res.send(error);
+    }
+  };
 
+  getEditInstitute = async (req, res) => {
+    try {
+      const institute_id = req.params.institute_id;
 
+      const query = {
+        is_deleted: 0,
+        _id: institute_id,
+      };
+      const projection = {
+        university: 1,
+        institute: 1,
+        tpo_name: 1,
+        tpo_email: 1,
+        tpo_phone_number: 1,
+        qualification: 1,
+      };
+
+      let result = await institute
+        .find(query, projection)
+        .populate("university", "name");
+      if (result.length) {
+        result = JSON.parse(JSON.stringify(result));
+
+        result.forEach((d) => {
+          d.university = d.university.name;
+        });
+        response.response(
+          res,
+          StatusCodes.OK,
+          status.success,
+          instituteMessage.DATA_FOUND,
+          result
+        );
+      } else throw new Error(instituteMessage.DATA_NOT_FOUND);
     } catch (error) {
       response.response(
         res,
@@ -546,10 +526,7 @@ let checkstatus=0;
         error.message
       );
     }
-
-
-
-  }
+  };
 }
 
 export default instituteController;

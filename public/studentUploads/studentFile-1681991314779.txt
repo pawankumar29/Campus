@@ -1,0 +1,2 @@
+name,roll_no,father_name,dob,phone_no,email,qualification,branch
+Aman Porte,3072215030,father1,01/25/1995,7984651320,amanRinku@yopmail.com,B.tech,CSE

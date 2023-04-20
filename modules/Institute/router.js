@@ -13,6 +13,7 @@ Router.route("/hiringInstitutes").get(classObject.getHiringInstituteList);
 Router.route("/deleteInstitute/:_id").delete(classObject.removeInstitute);
 Router.route("/view_institute/:institute_id").get(classObject.viewInstitute);
 Router.route("/getEditInstitute/:institute_id").get(classObject.getEditInstitute);
+Router.route("/uploadStudent/:institute_id").post(classObject.uploadStudentFile);
 
 
 export default Router;

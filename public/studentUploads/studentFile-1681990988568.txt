@@ -1,0 +1,73 @@
+[{
+  "_id": {
+    "$oid": "63fc5fd6c88877c5a4fb48b2"
+  },
+  "name": "awan",
+  "roll_no": "23",
+  "father_name": "ks singh",
+  "qualification": "Btech",
+  "branch": "",
+  "cv": "",
+  "batch": 2023,
+  "email": "ernd@gmail.com",
+  "status": 0,
+  "phone_no": "9988118765",
+  "dob": "22/09/200",
+  "otp_code": "",
+  "institute_id": {
+    "$oid": "63e36165d222f340c6acba8e"
+  },
+  "push_notification": 1,
+  "cgpa": "9",
+  "device_token": "",
+  "is_email_verified": 0,
+  "is_deleted": 0,
+  "device_id": "",
+  "created_at": {
+    "$date": {
+      "$numberLong": "1677483990055"
+    }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1677483990055"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63fc5fddc88877c5a4fb48b6"
+  },
+  "name": "awan",
+  "roll_no": "23",
+  "father_name": "ks singh",
+  "qualification": "Btech",
+  "branch": "",
+  "cv": "",
+  "batch": 2023,
+  "email": "erwd@gmail.com",
+  "status": 0,
+  "phone_no": "9988118765",
+  "dob": "22/09/200",
+  "otp_code": "",
+  "institute_id": {
+    "$oid": "63e36165d222f340c6acba8e"
+  },
+  "push_notification": 1,
+  "cgpa": "9",
+  "device_token": "",
+  "is_email_verified": 0,
+  "is_deleted": 0,
+  "device_id": "",
+  "created_at": {
+    "$date": {
+      "$numberLong": "1677483997816"
+    }
+  },
+  "updated_at": {
+    "$date": {
+      "$numberLong": "1677483997816"
+    }
+  },
+  "__v": 0
+}]
