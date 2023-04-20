@@ -44,7 +44,7 @@ export const readCsvFile = (file) => {
       const stream = fs.createReadStream(path); // it is needed to pass in the fromstream
 
       fast_csv
-        .parseStream(stream, { headers: true })
+        .parseStream(stream, { headers: true }) // return array
         .on("data", (data) => {
           documentDataArray.push(data);
         })
