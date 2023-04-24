@@ -86,7 +86,7 @@ const AllInstitutePage = () => {
             <tr>
               <td>1</td>
               <td>1</td>
-              <td >1</td>
+              <td colSpan="2">1</td>
               <td>1</td>
               <td>1</td>
               <td>1</td>
