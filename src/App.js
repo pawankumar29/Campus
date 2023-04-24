@@ -7,6 +7,7 @@ import ResetPassword from './components/Authentication/resetPasswordPage.js';
 import Page from './components/Institute/instituteListing.js';
 import SignUp from "./components/helper.js"
 import AddInstitute from './components/Institute/addInstitutePage1.js';
+import AllInstitutePage from './components/Institute/AllInstituteListingPage.js';
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
         
               
         <Routes>
-         <Route path="/dashboard" element={<PrivateRoute  Component={Page}/>} />
+         <Route path="/dashboard" element={<PrivateRoute  Component={AllInstitutePage}/>} />
          <Route path="/addInstitute" element={<PrivateRoute  Component={AddInstitute}/>} />
 
           <Route path="/forgot" element={<ForgotPassword/>}  />   
